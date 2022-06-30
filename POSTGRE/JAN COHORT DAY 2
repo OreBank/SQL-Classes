@@ -1,0 +1,110 @@
+-- we use (--) to comment our codes
+
+-- JANUARY COHORT POSTGRESQL DAY 2
+
+-- 01 
+-- SELECT FROM STATEMENT
+-- Used to retrieve data from a column, group of columns, or all the columns in a TABLE
+
+-- SEECTING ALL COLUMNS (*)
+-- SELECT * FROM TABLENAME
+
+SELECT * FROM ACTOR;
+
+SELECT * FROM CUSTOMER;
+
+-- SELECTING GROUP OF COLUMNS
+-- SELECT COLUMN_NAME1, COLUMN_NAME2, COLUMN_NAME3, COLUMN_NAMEX FROM TABLE_NAME
+
+SELECT FIRST_NAME, LAST_NAME FROM ACTOR;
+
+SELECT LAST_NAME, FIRST_NAME FROM ACTOR;
+
+-- GET THE CUSTOMER_ID, LASTNAME AND EMAIL OF OUR CUSTOMERS
+
+SELECT * FROM CUSTOMER;
+SELECT CUSTOMER_ID, LAST_NAME, EMAIL FROM CUSTOMER;
+
+-- SELECT A SINGLE COLUMN
+SELECT EMAIL FROM CUSTOMER;
+
+-- 02 DISTINCT 
+-- USED TO REMOVE DUPLICATES
+
+SELECT * FROM FILM;
+
+SELECT RELEASE_YEAR FROM FILM;
+
+SELECT DISTINCT RELEASE_YEAR FROM FILM;
+
+SELECT DISTINCT RENTAL_DURATION FROM FILM;
+
+SELECT DISTINCT RATING FROM FILM;
+
+-- 03 WHERE 
+-- USED TO FILTER RECORDS, USED WITH LOTS OF OPERATORS(=, <,> etc)
+
+-- customers whose first name is Jamie
+select * from customer;
+
+select first_name, last_name from customer
+where first_name = 'Jamie';
+
+select first_name, last_name from customer
+where first_name = 'jAmie';
+
+-- customers whose first name is Jamie and last name is rice
+select first_name, last_name from customer
+where first_name = 'Jamie'
+
+
+-- LOGICAL OPERATORS
+-- AND =  USED WHEN WE WANT THE TWO OR MORE CONDITIONS FULFILLED AT THE SAME TIME 
+-- OR =  USED WHEN WE WANT AT LEAST ONE OF THE CONDITIONS FULFILLED
+
+select first_name, last_name from customer 
+where first_name = 'Jamie' AND last_name = 'Rice'
+
+select * from customer
+where first_name = 'Jamie' AND last_name = 'Rice'
+
+-- A customer wants to know what the movie “Outlaw  Hanky” is about. 
+-- Could you give them the description for the movie “Outlaw Hanky”?
+
+select * from film
+
+
+select title, description from film
+where title = 'Outlaw Hanky'
+
+select description from film
+where title = 'Outlaw Hanky'
+
+
+-- If you want to know who paid the rental rate which amount is  
+-- either less than 1USD or greater than 8USD. hint: Use the OR  operator
+
+select * from payment
+
+select customer_id, amount from payment
+where amount < 1 or amount > 8;
+
+
+--- AGGREGATE STATEMENTS
+-- COUNT
+-- MIN
+-- MAX
+-- AVG
+-- SUM
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,34 @@
+SELECT *      -- wildcard , it shows everything
+FROM actor;
+
+SELECT first_name, last_name
+from actor;
+
+select email, first_name, last_name
+from customer;
+
+
+select distinct rental_duration from film;
+
+
+select distinct release_year from film;
+
+
+select distinct rating from film;
+select * from film;
+
+select count(distinct rating) from film;
+
+select first_name, last_name
+from customer
+where first_name = 'Jamie' AND last_name = 'Rice';
+
+
+select customer_id, amount from payment
+where amount < 1 OR amount > 8;
+
+select customer_id, amount from payment
+where Amount != 4.99;
+
+select customer_id, amount from payment
+where amount <> 4.99;

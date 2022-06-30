@@ -1,0 +1,65 @@
+-- in-line commenting
+/* multiple line 
+commenting*/
+
+--JULY COHORT SQL CLASS 2
+-- * = ALL COLUMNS 
+SELECT *
+FROM actor;
+
+SELECT *
+FROM address;
+
+-- TO WRITE SPECIFIC COLUMN NAMES
+Select address_id, district, postal_code
+from address;
+
+Select first_name, last_name, email
+from customer;
+
+SELECT film_id, title, description, rating
+FROM FILM;
+
+-- using distinct
+select rental_rate
+from film;
+
+select distinct rental_rate
+from film;
+
+select distinct rating
+from film;
+
+-- using where
+Select *
+from customer
+where first_name = 'Jamie' and last_name = 'Rice'
+
+Select first_name, last_name, email, address_id
+from customer
+where first_name = 'Jamie' and last_name = 'Rice'
+
+
+select film_id, title, release_year,rental_rate
+from film
+where rental_rate < 1 or rental_rate > 8;
+
+select payment_id, customer_id,  amount
+from payment
+where amount < 1 or amount > 8;
+
+select distinct amount
+from payment
+where amount < 1 or amount > 8;
+
+select  amount
+from payment
+where amount <> 4.99
+
+select  amount
+from payment
+where amount != 4.99
+
+select first_name, last_name, email
+from customer
+where fiRst_name = 'Nancy' and Last_NAME = 'Thomas'

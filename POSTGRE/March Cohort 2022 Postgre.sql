@@ -1,0 +1,356 @@
+-- QUANTUM ANALYTICS MARCH COHORT 2022
+-- POSTGRESQL DAY 01/02
+
+-- SELECT FROM STATEMENT
+-- USED TO PULL ALL THE COLUMNS, SOME COLUMNS OR A SINGLE COLUMN FROM A TAABLE
+-- ALL COLUMNS (*)
+SELECT * FROM ACTOR;
+SELECT * FROM FILM;
+
+-- SOME COLUMNS 
+SELECT FILM_ID, TITLE, DESCRIPTION, RELEASE_YEAR FROM FILM;
+
+-- SINGLE 
+SELECT TITLE FROM FILM;
+
+-- SELECT DISTINCT 
+-- WE USE DISTINCT TO REMOVE DUPICATE RECORDS 
+
+SELECT * FROM FILM;
+
+SELECT RENTAL_DURATION FROM FILM;
+
+SELECT DISTINCT RENTAL_DURATION FROM FILM;
+
+SELECT RELEASE_YEAR FROM FILM;
+SELECT DISTINCT RELEASE_YEAR FROM FILM;
+
+-- WHERE STATEMENT
+-- USED TO FILTER RECORDS 
+SELECT * FROM CUSTOMER;
+
+-- FETCH THE FULL NAME OF THE CUSTOMER(S) WHOSE FIRSTNAME IS 'JAMIE'
+SELECT FIRST_NAME, LAST_NAME FROM CUSTOMER
+WHERE FIRST_NAME = 'Jamie';
+
+-- those who paid rental rate amount greater than 10
+select * from payment;
+
+select customer_id, amount from payment
+where amount > 10;
+
+-- get all records of the customer with firstname = JAMIE lastname = Rice
+select first_name, last_name from customer
+where first_name = 'Jamie' AND last_name = 'Rice';
+
+select * from customer
+where first_name = 'Jamie' AND last_name = 'Rice';
+
+-- LIMIT 
+-- USED TO LIMIT THE ROWS WE GET BACK AFTER QUERRY
+SELECT * FROM PAYMENT
+LIMIT 10;
+
+-- ORDER BY 
+-- USED TO SORT RECORDS; ALPHABETICALLY OR NUMERICALLY, ASCENDING OR DESCENDING
+-- ASC 	= ASCENDING
+-- DESC = DESCENDING
+SELECT FIRST_NAME, LAST_NAME FROM CUSTOMER
+ORDER BY FIRST_NAME ASC;
+
+SELECT FIRST_NAME, LAST_NAME FROM CUSTOMER
+ORDER BY FIRST_NAME;
+
+SELECT CUSTOMER_ID, AMOUNT FROM PAYMENT
+ORDER BY AMOUNT DESC;
+
+
+-- FIRST 10 CUSTOMERS ALPHABETICALLY
+SELECT FIRST_NAME, LAST_NAME FROM CUSTOMER
+ORDER BY FIRST_NAME ASC
+LIMIT 10;
+
+-- BETWEEN STATEMENT 
+-- USED WITH THE WHERE TO FILTER
+-- USED TO FILTER WITH RANGES 
+-- USED TO REPLACE <= AND >=
+
+-- we want know the customerid, amount of payment bewtten 8 and 10 
+
+select customer_id, amount from payment
+where amount between 8 and 10;
+
+select customer_id, amount from payment
+where amount >= 8 and amount <=10;
+
+-- Not between 
+select customer_id, amount from payment
+where amount not between 8 and 10;
+
+-- IN Statement
+-- used to replace =
+
+-- get info about customerid 360, 361,362
+select * from customer
+where customer_id in (360, 361, 362);
+
+select * from customer
+where customer_id = 360 or customer_id = 361 or customer_id = 362;
+
+-- not in 
+-- negation of in
+select * from customer
+where customer_id not in (360, 361, 362);
+
+
+-- like function
+-- case sensitive
+-- % = as many characters as possible
+-- _ = one character 
+
+--- get names  about those whose first name start with 'Jen'
+
+select first_name, last_name from customer
+where first_name like 'Jen%';
+
+--- get names  about those whose last name ends with 'is'
+select first_name, last_name from customer
+where last_name like '%is';
+
+-- ilike 
+-- doest everything that the like does but it is case insensitive 
+select first_name, last_name from customer
+where first_name ilike 'jen%';
+
+
+-- using the _ 
+select first_name, last_name from customer
+where first_name like 'Jen__';
+
+-- using both
+select first_name, last_name from customer
+where first_name like '_en%';
+
+-- DAY O3 
+
+-- AGGREGRATE FUNCTIONS 
+-- ALLOW US TO PERFORM SIMPLE STATISTICAL OPERATIONS 
+-- THEY WORK ON ONE COLUMN AT A TIME 
+-- THEY CHANGE THE COLUMN NAMES 
+-- THE COLUMNS QUERRIED SHOULD BE IN BRACKETS()
+
+-- MIN
+-- GIVES THE MINIMUMN VALUES
+SELECT * FROM PAYMENT;
+SELECT AMOUNT FROM PAYMENT;
+
+SELECT MIN (AMOUNT) FROM PAYMENT;
+
+-- MAX
+-- GIVES US THE MAXIMUM VALUES
+SELECT MAX(AMOUNT) FROM PAYMENT;
+
+-- SUM 
+-- SUMS UP THE COLUMN VALUES 
+
+SELECT SUM (AMOUNT) FROM PAYMENT;
+
+-- COUNT
+-- COUNT THE NUMBER OF VALUES IN THE COLUMN
+-- FREQUENCY 
+-- SOLVES THE QUESTION OF 'HOW MANY'
+SELECT COUNT(AMOUNT) FROM PAYMENT;
+
+SELECT COUNT (AMOUNT), SUM(AMOUNT) FROM PAYMENT;
+-- AVG
+-- GIVES US THE AVERAGE MEAN OF THE VALUES
+SELECT AVG(AMOUNT) FROM PAYMENT;
+
+-- ALIAS
+-- USED TO RENAME COLUMNS AND TABLES 
+-- METHOD 1 = USE 'AS' TO RENAME 
+-- METHOD 2 = JUST PUT THE NEW NAME IN FRONT OF THE COLUMN
+SELECT SUM (AMOUNT) FROM PAYMENT;
+SELECT SUM (AMOUNT) AS TOTAL_AMOUNT FROM PAYMENT;
+SELECT SUM (AMOUNT) TOTAL_AMOUNT FROM PAYMENT;
+
+SELECT MIN (AMOUNT) FROM PAYMENT;
+SELECT MIN (AMOUNT) AS MIN_AMOUNT FROM PAYMENT;
+
+SELECT MIN(AMOUNT) MIN_AMOUNT FROM PAYMENT;
+
+-- GROUP BY 
+-- GROUPS OUR RECORDS 
+-- WORKS WELL WITH AGGREGATE FUNCTIONS 
+SELECT * FROM PAYMENT;
+
+SELECT CUSTOMER_ID FROM PAYMENT
+GROUP BY CUSTOMER_ID;
+
+
+-- TOTAL AMOUNT EACH CUSTOMER PAID INTO THE COMPANY 
+SELECT CUSTOMER_ID, AMOUNT FROM PAYMENT 
+
+SELECT CUSTOMER_ID, SUM(AMOUNT) FROM PAYMENT 
+GROUP BY CUSTOMER_ID
+
+SELECT CUSTOMER_ID, SUM(AMOUNT) TOTAL_AMOUNT FROM PAYMENT 
+GROUP BY CUSTOMER_ID;
+
+-- CUSTOMER WITH HIGHEST TRANSACTION
+
+SELECT CUSTOMER_ID, SUM(AMOUNT) TOTAL_AMOUNT FROM PAYMENT 
+GROUP BY CUSTOMER_ID
+ORDER BY SUM(AMOUNT) DESC;
+
+
+-- TOP 10 BEST CUSTOMERS 
+SELECT CUSTOMER_ID, SUM(AMOUNT) TOTAL_AMOUNT FROM PAYMENT 
+GROUP BY CUSTOMER_ID
+ORDER BY SUM(AMOUNT) DESC
+LIMIT 10;
+
+-- MOST VALUABLE CUSTOMER
+SELECT CUSTOMER_ID, COUNT(AMOUNT) AS PATRONAGE FROM PAYMENT
+GROUP BY CUSTOMER_ID
+ORDER BY COUNT(AMOUNT) DESC
+LIMIT 1;
+
+
+SELECT CUSTOMER_ID, SUM(AMOUNT) TOTAL_AMOUNT, COUNT(AMOUNT) AS PATRONAGE FROM PAYMENT
+GROUP BY CUSTOMER_ID
+ORDER BY SUM(AMOUNT) DESC
+
+
+-- HAVING 
+---USED FILTER GROUPED RECORDS
+-- EVERYTHING YOU CAN DO WITH 'WHERE', YOU CAN DO AS WELL WITH HAVING
+-- LIKE, BETWEEN, IN, = <> ETC
+
+
+-- How much has the customers who spent above $200 spent  exactly?
+SELECT CUSTOMER_ID, SUM(AMOUNT) FROM PAYMENT
+GROUP BY CUSTOMER_ID
+HAVING SUM(AMOUNT) > 200;
+
+SELECT CUSTOMER_ID, SUM(AMOUNT) FROM PAYMENT
+GROUP BY CUSTOMER_ID
+HAVING SUM(AMOUNT) NOT BETWEEN 200 AND 300
+ORDER BY SUM(AMOUNT) DESC
+LIMIT 5;
+
+-- How many films of each rating type do we have?
+
+-- Marrystella
+select * from film;
+
+select count(title), rating 
+from film
+group by rating
+
+-- Ifetola Joy
+select distinct film_id, rating from film; -- wrong
+
+-- 
+
+select rating, count(title) no_of_films from film
+group by rating
+
+-- we want to know the average rental rate for each rating
+-- Mayowa
+select rating, avg(rental_rate) from film
+group by rating
+
+-- We want to know the average rental rate of these 3 ratings: R,  PG, G.
+-- Taofeeqat
+
+select rating, avg(rental_rATE) AS AVG_RATE from film
+group by rating 
+having rating IN ('R', 'PG', 'G')
+
+--
+--  CREATE TABLES 
+-- USE THE CREATE TABLE STATEMENT
+-- WITHIN THE BRACKETS, PUT THE COLUMNS 
+-- DEFINE THE COLUMNS DATATYPES 
+-- DEFINE THE CONSTRAINTS
+-- ADD A COMMA AFTER EVERY COLUMN DEFINITION
+
+CREATE TABLE QUANTUM (
+	MATRIC_NO SERIAL PRIMARY KEY,
+	NAME VARCHAR(50) NOT NULL ,
+	COURSE VARCHAR(10) NOT NULL,
+	PHONE INT ,
+	GENDER VARCHAR(1) NOT NULL
+);
+
+-- CHAR - 0 - 255 CHARACTERS
+-- VARCHAR -  0 - 65535 CHARACTER
+-- SERIAL = AUTOMATICALLY POPULATE
+
+SELECT * FROM QUANTUM;
+
+
+-- INSERT INTO 
+-- USED TO POPULATE THE TABLE 
+
+-- USE 'INSERT INTO'
+-- PUT THE COLUMNS NEEDED WITHIN A BRACKET
+-- USE 'VALUES'
+-- ADD A BRACKET, WITHIN WHICH EVERY ENTRY IS GOING TO BE ADDED WITH A ''
+-- SEPERATE EACH COLUM WITH A COMMAS
+
+INSERT INTO QUANTUM (NAME, COURSE, PHONE, GENDER)
+VALUES 
+	('MARY', 'POSTGRE', '123456789', 'M' ),
+
+INSERT INTO QUANTUM (NAME, COURSE, PHONE, GENDER)
+VALUES 
+	('MAYOWA', 'POSTGRE', '123453435', 'M' ),
+	('TAOFEQAT', 'POSTGRE', '12332442', 'F'),
+	('UKPEIGBE', 'EXCEL', '22331111', 'M'),
+	('RUTH', 'EXCEL', '24433222', 'F');
+
+
+-- UPDATE 
+-- USED TO UPDATE A COLUMN 
+
+UPDATE QUANTUM 
+SET GENDER = 'F'
+WHERE NAME = 'MARY'
+
+UPDATE QUANTUM 
+SET COURSE = 'TABLEAU'
+WHERE MATRIC_NO = '5'
+
+UPDATE QUANTUM 
+SET COURSE = 'EXCEL',
+	NAME = 'JULIET'
+WHERE MATRIC_NO = '1'
+
+--- CREATE DATABASE 
+CREATE DATABASE QTM;
+
+-- DELETE ROW
+
+DELETE FROM QUANTUM 
+WHERE NAME = 'RUTH';
+
+-- DELETE TABLE 
+DROP TABLE QUANTUM; 
+
+-- DELETE DATABASE
+DROP DATABASE QTM;
+
+
+SELECT * FROM QUANTUM;
+
+
+--- JOINS 
+--- UNION 
+
+-- CONNECT WITH ME ON LINKEDIN 
+-- ABDULLAH BANKOLE
+-- www.linkedin.com/in/abdullahbankole/
+
+

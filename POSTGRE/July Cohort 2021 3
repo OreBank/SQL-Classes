@@ -1,0 +1,167 @@
+--count
+--limit
+--AS STATEMENT
+
+select count(payment_id) as total_transaction
+from payment;
+
+--Order by
+
+select * 
+from customer
+order by first_name asc;
+
+select * 
+from customer
+order by customer_id desc
+limit 10;
+
+select customer_id,amount
+from payment
+order by amount desc
+limit 10;
+
+select film_id, title
+from film
+order by film_id asc
+limit 5;
+
+--Between
+
+select payment_id, customer_id,  amount
+from payment
+where amount > 1 and amount < 8
+order by amount asc
+
+select payment_id, customer_id,  amount
+from payment
+where amount >= 1 and amount <= 8
+order by amount desc
+
+
+select payment_id, customer_id,  amount
+from payment
+where amount between 1 and 8
+order by amount asc
+
+-- not between 
+select payment_id, customer_id,  amount
+from payment
+where amount not between 1 and 8
+order by amount desc
+
+--IN Statement
+
+select rental_id, customer_id, return_date
+from rental
+where customer_id in (1,2)
+order by return_date desc
+
+select rental_id, customer_id, return_date
+from rental
+where customer_id = 1 or customer_id = 2
+order by return_date desc
+
+
+select * 
+from payment 
+where amount in (7.99,8.99)
+
+--NOT IN
+select * 
+from payment 
+where amount not in (7.99,8.99)
+
+--Wildcard LIKE
+-- beginning
+select first_name, last_name, email, address_id
+from customer
+where first_name like 'Jen%'
+
+--ending
+select first_name, last_name, email, address_id
+from customer
+where first_name like '%er'
+
+select first_name, last_name, email, address_id
+from customer
+where first_name like '___er';
+
+--middle
+select first_name , last_name, email, address_id
+from customer
+where first_name like '%her%' 
+
+select first_name, last_name, email, address_id
+from customer
+where first_name like '_her%'
+
+select first_name, last_name, email, address_id
+from customer
+where first_name like '%her%' and address in (50,57)
+
+-- agggregate function
+--sum
+
+select sum(amount) as total_amount
+from payment
+
+--min
+select min(amount) as min_amount
+from payment
+
+--max
+select max(amount) as max_amount
+from payment
+
+--avg
+select avg(amount) as avg_amount
+from payment
+
+--GROUP BY
+select customer_id
+from payment
+
+select distinct customer_id
+from payment
+
+select customer_id
+from payment 
+group by customer_id
+
+select customer_id, SUM(amount) as total_payment
+from payment 
+group by customer_id
+
+select customer_id, max(amount)
+from payment 
+group by customer_id
+
+select rating, count(film)
+from film
+group by rating
+
+--having
+
+select customer_id, sum(amount)
+from payment
+group by customer_id
+having sum(amount)>200
+
+select customer_id, sum(amount) as total_amount
+from payment
+group by customer_id
+having sum(amount)> 200;
+
+select rating, avg(rental_rate) as avg_rating
+from film
+group by rating
+having rating in ('R','PG', 'G')
+
+/*join
+inner join */
+
+select first_name, last_name, payment.customer_id, amount
+from payment
+inner join customer on payment.customer_id = customer.customer_id
+
