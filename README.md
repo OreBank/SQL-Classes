@@ -1,2 +1,6 @@
-# MY-Classes
-This is a repo of all my classes
+# MY Classes
+
+This is a repository of all the my classes at **Quantum Analytics**, teaching ***SQL (MS-SQL Server, POSTGRESQL, MySQL etc)***
+
+
+
