@@ -10,3 +10,15 @@ The DVD Rental Database was used for the classes
 - Data Query Languages 
 - Data Manipulation Languages
 - Data Definition Languages 
+
+# Syntaxes Learnt
+- SELECT FROM 
+- DISTINCT 
+- WHERE 
+- LIMIT
+- AGGREGATE FUNCTIONS (MIN, MAX, AVG, SUM, COUNT)
+- ORDER BY
+- GROUP BY
+- HAVING
+- JOINS 
+- UNION
